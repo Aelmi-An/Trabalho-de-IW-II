@@ -1,6 +1,3 @@
-// ==========================================
-// 1. O CÉREBRO DA IA (SORTEIO COM MEMÓRIA)
-// ==========================================
 class IABatalhaNaval {
     constructor() {
         // Lista que vai guardar todas as 100 coordenadas possíveis [x, y]
@@ -33,11 +30,8 @@ class IABatalhaNaval {
     }
 }
 
-// ==========================================
-// 2. MOTOR DO JOGO E TURNOS ALTERNADOS
-// ==========================================
 function BatalhaNaval() {
-    let sequencia = [];       // Matriz secreta (guarda apenas os números de 0 a 4)
+    let sequencia = [];    
     let tabuleiroVisual = []; // Matriz visual (guarda as DIVs do HTML para podermos alterá-las)
 
     // LOOP ORIGINAL: Cria o mapa de números secretos (o oceano)
@@ -119,5 +113,4 @@ function BatalhaNaval() {
     }
 }
 
-// Inicia o jogo
 BatalhaNaval();
