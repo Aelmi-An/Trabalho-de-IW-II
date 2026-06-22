@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batalha Naval</title>
-
     <link rel="stylesheet" href="Navalidades.css">
 </head>
 
 <body>
-    <h1>Batalha Naval!</h1>
+    <div id="cabecalho">
+        <h1>Batalha Naval!</h1>
+    </div>
 
-    <div id="tabuleiro_bem_bolado"></div>
+    <div id="menu_inicial">
+        <h2>Escolha o Modo de Jogo:</h2>
+        <div class="botoes_container">
+            <button onclick="escolherModo('padrao')">Jogar Solo</button>
+            <button onclick="escolherModo('cpu')">Jogar contra CPU</button>
+        </div>
+    </div>
 
-    <script src="Navalidades.js"></script>
+    <div id="tabuleiro_bem_bolado" style="display: none;"></div>
+
+    <script src="Javascript/Navalidades.js"></script>
+    <script src="Javascript/NavalidadesCPU.js"></script>
+
+    <script>
+        function escolherModo(modo) {
+            // Esconde o menu inicial
+            document.getElementById("menu_inicial").style.display = "none";
+            
+            // Mostra o tabuleiro como GRID (isso força o CSS do tabuleiro a funcionar com as 10 colunas!)
+            let tabuleiro = document.getElementById("tabuleiro_bem_bolado");
+            tabuleiro.style.display = "grid";
+
+            if (modo === "padrao") {
+                BatalhaNavalPadrao();
+            } else if (modo === "cpu") {
+                BatalhaNavalCPU();
+            }
+        }
+    </script>
 </body>
 </html>

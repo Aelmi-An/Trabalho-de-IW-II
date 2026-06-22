@@ -1,48 +1,71 @@
 body {
-    /*Fonte usada*/
     font-family: Arial, Helvetica, sans-serif;
-    /*Cor de fundo*/
     background-color: lightblue;
-    /* centraliza tudo na tela, horizontal e verticalmente */
+    /* Centraliza tudo na tela (horizontal e vertical) */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* Força o fundo a ocupar 100% da altura da tela */
+    min-height: 100vh;
+    margin: 0;
 }
 
-/*Tabuleiro usado, o div no html*/
+#menu_inicial {
+    background-color: white;
+    /* Espaçamento interno do card do menu */
+    padding: 30px;
+    border-radius: 12px;
+    /* Sombra suave preta ao redor do menu */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    /* Alinha o título e os botões um embaixo do outro */
+    display: flex;
+    flex-direction: column;
+    /* Espaço fixo de 15px entre cada elemento do menu */
+    gap: 15px;
+}
+
+#menu_inicial button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    /* Transforma a seta do mouse na "mãozinha" de clique */
+    cursor: pointer;
+    /* Suaviza a troca de cor ao passar o mouse */
+    transition: background 0.2s;
+}
+
+#menu_inicial button:hover {
+    /* Cor que o botão assume quando o mouse está em cima */
+    background-color: #0b7dda;
+}
+
 #tabuleiro_bem_bolado {
-
     display: grid;
-
-    /* 10 colunas fixas */
+    /* Cria a grade de 10 colunas por 10 linhas, cada uma com 50px */
     grid-template-columns: repeat(10, 50px);
-
-    /* 10 linhas fixas */
     grid-template-rows: repeat(10, 50px);
-
-    /* leve espaço entre as células */
+    /* Pequeno espaço de 2px entre as caixinhas */
     gap: 2px;
 }
 
 .celula {
-    /*Proporções da célula*/
     width: 50px;
     height: 50px;
-    /*Borda da célula*/
     border: 1px solid black;
-
-    /* se algum conteúdo sobrasse, será ocultado */
+    /* Esconde qualquer rebarba ou sobra da imagem interna */
     overflow: hidden;
-    /*Cor de fundo*/
     background-color: lightblue;
 }
 
-/* imagem na célula*/
 .celula img {
-    /*Proporções*/
     width: 100%;
     height: 100%;
-    /*"Preserva" as proporções da imagem, mas a reduz para que caiba na célula. Caso sobrasse algo, seria eliminado pelo "overflow: hidden"*/
+    /* Preenche o quadrado da célula esticando a imagem proporcionalmente */
     object-fit: cover;
 }
