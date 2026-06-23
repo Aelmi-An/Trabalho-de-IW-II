@@ -20,6 +20,13 @@
         </div>
     </div>
 
+    <div id="pontuação_padrao" style="display: none;">
+        <p>Pontuação: </p>
+    </div>
+    <div id="pontuação_com_CPU">
+        <p>Seus Pontos: </p>
+        <p>Pontos da CPU: </p>
+    </div>
     <div id="tabuleiro_bem_bolado" style="display: none;"></div>
 
     <script src="Javascript/Navalidades.js"></script>
@@ -29,18 +36,20 @@
         function escolherModo(modo) {
             // Esconde o menu inicial
             document.getElementById("menu_inicial").style.display = "none";
-            
+            //mostra
             // Mostra o tabuleiro como GRID (isso força o CSS do tabuleiro a funcionar com as 10 colunas!)
             let tabuleiro = document.getElementById("tabuleiro_bem_bolado");
             tabuleiro.style.display = "grid";
 
             if (modo === "padrao") {
+                //mostra a pontuação do jogo padrão como flex
+            document.getElementById("pontuação_padrao").style.display = "flex";
                 BatalhaNaval();
             } else if (modo === "cpu") {
+            document.getElementById("pontuação_com_CPU").style.display = "flex";
                 BatalhaNavalCPU();
             }
         }
     </script>
-    <audio src="Áudios/deltarune-explosion.mp3"></audio>
 </body>
 </html>
