@@ -94,5 +94,5 @@ function turnoDaIA() {
         // DESTRAVA O JOGO: Libera o tabuleiro inteiro de volta para o jogador clicar na próxima rodada
         tabuleiro.style.pointerEvents = "auto";
 
-    }, 2000); // 2000 ms = 2 segundos
+    }, 1000); // 2000 ms = 2 segundos
 }
