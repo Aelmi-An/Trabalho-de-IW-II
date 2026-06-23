@@ -20,17 +20,19 @@
         </div>
     </div>
 
-    <div id="pontuação_padrao" style="display: none;">
-        <p>Pontuação: </p>
+    <div id="placar_padrão" style="display: none;">
+        <p>Pontuação: <span id="pontos-player">0</span></p>
     </div>
-    <div id="pontuação_com_CPU">
-        <p>Seus Pontos: </p>
-        <p>Pontos da CPU: </p>
-    </div>
+<div id="placar_com_cpu" style="display: none;">
+    <p>Seus Pontos: <span id="pontos-player">0</span></p>
+    <p>Pontos CPU: <span id="pontos-cpu">0</span></p>
+</div>
+
     <div id="tabuleiro_bem_bolado" style="display: none;"></div>
 
     <script src="Javascript/Navalidades.js"></script>
     <script src="Javascript/NavalidadesCPU.js"></script>
+    <script src="Javascript/Placar_mal_bolado"></script>
 
     <script>
         function escolherModo(modo) {
