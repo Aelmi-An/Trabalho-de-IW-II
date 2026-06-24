@@ -1,0 +1,11 @@
+﻿{
+	"id": "narreator.randomblood",
+	"name": "Random Blood",
+	"version": "0.1.0",
+	"authors": "Narreator",
+	"description": "Makes blood from the blood mod random
+How to use: Whenever it creates a blood spatter, it chooses a random one from existing colors in options(Blood Mod). Modify those to have greater variety in colors. Make the world beutifull! With violence. Credits to LeeMoryia for the Blood mod!",
+	"requirements": [ "blood" ],
+	"requirements_names": [ "Blood" ],	
+	"tags": [ "Cosmetic" ]
+}

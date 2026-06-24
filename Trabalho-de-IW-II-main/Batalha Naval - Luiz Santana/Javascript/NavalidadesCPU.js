@@ -74,6 +74,7 @@ function BatalhaNavalCPU() {
                     case 4: 
                         imageminicial.src = "Imagens/bomba.png"; 
                         KaboomCPU.play(); 
+                        adicionarPontos('player', -10)
                         break;
                 }
 
@@ -148,6 +149,7 @@ function turnoDaIACPU(sequenciaCPU) {
         case 4: 
             if (imagemIA) imagemIA.src = "Imagens/bomba.png"; 
             KaboomCPU.play(); 
+            adicionarPontos('cpu', -10)
             break;
     }
 
