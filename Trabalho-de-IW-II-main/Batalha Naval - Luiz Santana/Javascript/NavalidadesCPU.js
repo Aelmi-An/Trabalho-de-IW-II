@@ -59,22 +59,22 @@ function BatalhaNavalCPU() {
                     case 1: 
                         imageminicial.src = "Imagens/Ship-1.png"; 
                         XablauCPU.play(); 
-                        adicionarPontos('player', 30); 
+                        adicionarPontos('player', 321); 
                         break;
                     case 2: 
                         imageminicial.src = "Imagens/Ship-2.png"; 
                         XablauCPU.play(); 
-                        adicionarPontos('player', 20); 
+                        adicionarPontos('player', 231); 
                         break;
                     case 3: 
                         imageminicial.src = "Imagens/Ship-3.png"; 
                         XablauCPU.play(); 
-                        adicionarPontos('player', 10); 
+                        adicionarPontos('player', 132); 
                         break;
                     case 4: 
                         imageminicial.src = "Imagens/bomba.png"; 
                         KaboomCPU.play(); 
-                        adicionarPontos('player', -10)
+                        adicionarPontos('player', -123)
                         break;
                 }
 
@@ -134,22 +134,22 @@ function turnoDaIACPU(sequenciaCPU) {
         case 1: 
             if (imagemIA) imagemIA.src = "Imagens/Ship-1.png"; 
             XablauCPU.play(); 
-            adicionarPontos('cpu', 30); 
+            adicionarPontos('cpu', 321); 
             break;
         case 2: 
             if (imagemIA) imagemIA.src = "Imagens/Ship-2.png"; 
             XablauCPU.play(); 
-            adicionarPontos('cpu', 20); 
+            adicionarPontos('cpu', 231); 
             break;
         case 3: 
             if (imagemIA) imagemIA.src = "Imagens/Ship-3.png"; 
             XablauCPU.play(); 
-            adicionarPontos('cpu', 10); 
+            adicionarPontos('cpu', 132); 
             break;
         case 4: 
             if (imagemIA) imagemIA.src = "Imagens/bomba.png"; 
             KaboomCPU.play(); 
-            adicionarPontos('cpu', -10)
+            adicionarPontos('cpu', -123)
             break;
     }
 
