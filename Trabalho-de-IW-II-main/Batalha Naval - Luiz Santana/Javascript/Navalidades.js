@@ -37,9 +37,9 @@ function BatalhaNaval() {
 
                 switch (opcao) {
                     case 0: imageminicial.src = "Imagens/wave.png"; Boom.play(); break;
-                    case 1: imageminicial.src = "Imagens/Ship-1.png"; Xablau.play(); break;
-                    case 2: imageminicial.src = "Imagens/Ship-2.png"; Xablau.play(); break;
-                    case 3: imageminicial.src = "Imagens/Ship-3.png"; Xablau.play(); break;
+                    case 1: imageminicial.src = "Imagens/Ship-1.png"; Xablau.play(); adicionarPontos('solo', 30); break;
+                    case 2: imageminicial.src = "Imagens/Ship-2.png"; Xablau.play(); adicionarPontos('solo', 20); break;
+                    case 3: imageminicial.src = "Imagens/Ship-3.png"; Xablau.play(); adicionarPontos('solo', 10); break;
                     case 4: imageminicial.src = "Imagens/bomba.png"; Kaboom.play(); break;
                 }
 

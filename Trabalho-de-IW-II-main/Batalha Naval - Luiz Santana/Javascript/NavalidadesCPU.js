@@ -1,13 +1,19 @@
-// Usamos uma estrutura que não conflita com o outro arquivo
+// Áudios específicos para o modo CPU (evita erros de escopo global)
+const BoomCPU = new Audio('Áudios/água.m4a');
+const XablauCPU = new Audio('Áudios/Navio.m4a');
+const KaboomCPU = new Audio('Áudios/Bomba.mp3');
+
+// Verifica se a lista de tiros da IA já existe para não dar erro de duplicação
 if (typeof tirosDisponiveisCPU === 'undefined') {
     var tirosDisponiveisCPU = [];
 }
 
+// Função principal que monta o modo de jogo contra o Bot
 function BatalhaNavalCPU() {
     let tab = document.getElementById("tabuleiro_bem_bolado");
-    tab.innerHTML = ""; // Limpa o tabuleiro anterior, se houver
+    tab.innerHTML = ""; 
     
-    // Reinicia os tiros da IA
+    // Reseta a lista de tiros que a IA pode dar nesta partida
     tirosDisponiveisCPU = [];
     for (let l = 0; l < 10; l++) {
         for (let c = 0; c < 10; c++) {
@@ -15,83 +21,139 @@ function BatalhaNavalCPU() {
         }
     }
 
-    // Recria a matriz secreta local para a CPU não usar a mesma do modo solo antiga
+    // Gera a matriz secreta de barcos do Bot (valores de 0 a 4)
     let sequenciaCPU = [];
     for (let linha = 0; linha < 10; linha++) {
         let oceano = [];
         for (let coluna = 0; coluna < 10; coluna++) {
-            oceano.push(Math.floor(Math.random() * 5));
+            oceano.push(Math.floor(Math.random() * 5)); 
         }
         sequenciaCPU.push(oceano);
     }
 
-    // Loop para criar o grid na tela
+    // Cria e desenha as caixinhas na tela para o modo CPU
     for (let x = 0; x < 10; x++) {
         for (let y = 0; y < 10; y++) {
             let celula = document.createElement("div");
             celula.classList.add("celula");
-            celula.id = "cel-" + x + "-" + y;
 
-            let imagem = document.createElement("img");
-            imagem.src = "Imagens/prontopraplay.png";
-            imagem.style.height = "100%";
-            imagem.style.width = "100%";
-            celula.appendChild(imagem);
+            let imageminicial = document.createElement("img");
+            imageminicial.src = "Imagens/prontopraplay.png";
+            imageminicial.style.height = "100%";
+            imageminicial.style.width = "100%";
+            celula.appendChild(imageminicial);
 
-            // Evento de clique
+            // Evento de clique para o Modo CPU
             celula.addEventListener("click", function () {
-                // Jogador joga
-                revelarCaixinhaCPU(x, y, imagem, sequenciaCPU); 
-                
-                // IA joga
-                turnoDaIACPU(sequenciaCPU);                   
+                // 1. Bloqueia cliques em TODO o tabuleiro para ninguém bugar o delay
+                tab.style.pointerEvents = "none";
+
+                let opcao = sequenciaCPU[x][y];
+
+                // Executa a lógica de imagens, sons e pontos específicos do Player na CPU
+                switch (opcao) {
+                    case 0: 
+                        imageminicial.src = "Imagens/wave.png"; 
+                        BoomCPU.play(); 
+                        break;
+                    case 1: 
+                        imageminicial.src = "Imagens/Ship-1.png"; 
+                        XablauCPU.play(); 
+                        adicionarPontos('player', 30); 
+                        break;
+                    case 2: 
+                        imageminicial.src = "Imagens/Ship-2.png"; 
+                        XablauCPU.play(); 
+                        adicionarPontos('player', 20); 
+                        break;
+                    case 3: 
+                        imageminicial.src = "Imagens/Ship-3.png"; 
+                        XablauCPU.play(); 
+                        adicionarPontos('player', 10); 
+                        break;
+                    case 4: 
+                        imageminicial.src = "Imagens/bomba.png"; 
+                        KaboomCPU.play(); 
+                        break;
+                }
+
+                // 2. Garante que ESTA célula específica nunca mais possa ser clicada de forma alguma
+                celula.style.pointerEvents = "none";
+                celula.classList.add("clicada"); 
+
+                // 3. Cria o delay de 1.5 segundos para a IA responder e depois libera o tabuleiro
+                setTimeout(function() {
+                    // Executa o turno da IA se você tiver criado essa função
+                    if (typeof turnoDaIACPU === "function") {
+                        turnoDaIACPU(sequenciaCPU);
+                    }
+                    
+                    // Libera as caixinhas não clicadas de volta para o jogador
+                    tab.style.pointerEvents = "auto";
+                }, 1500); 
             });
 
+            // Adiciona a célula montada dentro do grid principal do HTML
             tab.appendChild(celula);
         }
     }
 }
+function turnoDaIACPU(sequenciaCPU) {
+    if (tirosDisponiveisCPU.length === 0) return;
 
-function revelarCaixinhaCPU(linha, coluna, tagImagem, matriz) {
-    let numeroSecreto = matriz[linha][coluna];
-    
-    switch (numeroSecreto) {
-        case 0: tagImagem.src = "Imagens/wave.png"; Boom.play(); break;
-        case 1: tagImagem.src = "Imagens/Ship-1.png"; Xablau.play(); break;
-        case 2: tagImagem.src = "Imagens/Ship-2.png"; Xablau.play(); break;
-        case 3: tagImagem.src = "Imagens/Ship-3.png"; Xablau.play(); break;
-        case 4: tagImagem.src = "Imagens/bomba.png"; Kaboom.play(); break;
+    // 1. Sorteia o tiro da lista
+    let indiceAleatorio = Math.floor(Math.random() * tirosDisponiveisCPU.length);
+    let tiro = tirosDisponiveisCPU[indiceAleatorio];
+    tirosDisponiveisCPU.splice(indiceAleatorio, 1); 
+
+    let linhaIA = tiro[0];
+    let colunaIA = tiro[1];
+
+    // 2. BUSCA INFALÍVEL: Em vez de ID, pega pelo índice do Grid (linha * 10 + coluna)
+    let tab = document.getElementById("tabuleiro_bem_bolado");
+    let todasAsCelulas = tab.getElementsByClassName("celula");
+    let indiceDaCelula = (linhaIA * 10) + colunaIA;
+    let celulaIA = todasAsCelulas[indiceDaCelula];
+
+    // Se a célula sorteada já estiver clicada, tenta outra casa imediatamente
+    if (celulaIA && celulaIA.classList.contains("clicada")) {
+        turnoDaIACPU(sequenciaCPU); 
+        return; 
     }
 
-    let caixinhaAlvo = document.getElementById("cel-" + linha + "-" + coluna);
-    caixinhaAlvo.style.pointerEvents = "none";
-    caixinhaAlvo.classList.add("revelada");
-}
+    let imagemIA = celulaIA ? celulaIA.querySelector("img") : null;
+    let opcaoIA = sequenciaCPU[linhaIA][colunaIA]; 
 
-function turnoDaIACPU(matriz) {
-    let tab = document.getElementById("tabuleiro_bem_bolado");
-    tab.style.pointerEvents = "none";
+    // 3. Executa a reação visual e sonora do tiro da CPU
+    switch (opcaoIA) {
+        case 0: 
+            if (imagemIA) imagemIA.src = "Imagens/wave.png"; 
+            BoomCPU.play(); 
+            break;
+        case 1: 
+            if (imagemIA) imagemIA.src = "Imagens/Ship-1.png"; 
+            XablauCPU.play(); 
+            adicionarPontos('cpu', 30); 
+            break;
+        case 2: 
+            if (imagemIA) imagemIA.src = "Imagens/Ship-2.png"; 
+            XablauCPU.play(); 
+            adicionarPontos('cpu', 20); 
+            break;
+        case 3: 
+            if (imagemIA) imagemIA.src = "Imagens/Ship-3.png"; 
+            XablauCPU.play(); 
+            adicionarPontos('cpu', 10); 
+            break;
+        case 4: 
+            if (imagemIA) imagemIA.src = "Imagens/bomba.png"; 
+            KaboomCPU.play(); 
+            break;
+    }
 
-    setTimeout(function () {
-        if (tirosDisponiveisCPU.length > 0) {
-            let indiceSorteado = Math.floor(Math.random() * tirosDisponiveisCPU.length);
-            let tiroEscolhido = tirosDisponiveisCPU[indiceSorteado];
-            
-            tirosDisponiveisCPU.splice(indiceSorteado, 1);
-
-            let botX = tiroEscolhido[0];
-            let botY = tiroEscolhido[1];
-
-            let celulaBot = document.getElementById("cel-" + botX + "-" + botY);
-            let imgBot = celulaBot.querySelector("img");
-
-            revelarCaixinhaCPU(botX, botY, imgBot, matriz);
-        }
-
-        tab.style.pointerEvents = "auto";
-
-        let jaReveladas = document.querySelectorAll(".revelada");
-        jaReveladas.forEach(cel => cel.style.pointerEvents = "none");
-
-    }, 1500);
+    // 4. Trava a célula na tela
+    if (celulaIA) {
+        celulaIA.style.pointerEvents = "none";
+        celulaIA.classList.add("clicada");
+    }
 }

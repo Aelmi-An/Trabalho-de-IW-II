@@ -20,19 +20,19 @@
         </div>
     </div>
 
-    <div id="placar_padrão" style="display: none;">
-        <p>Pontuação: <span id="pontos-player">0</span></p>
-    </div>
+<div id="placar_padrão" style="display: none;">
+        <div>Pontuação: <span id="pontos-player-solo">0</span></div>
+</div>
 <div id="placar_com_cpu" style="display: none;">
-    <p>Seus Pontos: <span id="pontos-player">0</span></p>
-    <p>Pontos CPU: <span id="pontos-cpu">0</span></p>
+    <div>Seus Pontos: <span id="pontos-player">0</span></div>
+    <div>Pontos CPU: <span id="pontos-cpu">0</span></div>
 </div>
 
     <div id="tabuleiro_bem_bolado" style="display: none;"></div>
 
-    <script src="Javascript/Navalidades.js"></script>
     <script src="Javascript/NavalidadesCPU.js"></script>
-    <script src="Javascript/Placar_mal_bolado"></script>
+    <script src="Javascript/Placar_mal_bolado.js"></script>
+    <script src="Javascript/Navalidades.js"></script>
 
     <script>
         function escolherModo(modo) {
@@ -45,10 +45,10 @@
 
             if (modo === "padrao") {
                 //mostra a pontuação do jogo padrão como flex
-            document.getElementById("pontuação_padrao").style.display = "flex";
+            document.getElementById("placar_padrão").style.display = "flex";
                 BatalhaNaval();
             } else if (modo === "cpu") {
-            document.getElementById("pontuação_com_CPU").style.display = "flex";
+            document.getElementById("placar_com_cpu").style.display = "flex";
                 BatalhaNavalCPU();
             }
         }
