@@ -187,7 +187,7 @@ function turnoDaIACPU() {
     let linhaIA = tiro[0];
     let colunaIA = tiro[1];
 
-    // 2. BUSCA INFALÍVEL: Em vez de ID, pega pelo índice do Grid (linha * 10 + coluna)
+    //  Em vez de ID, pega pelo índice do Grid (linha * 10 + coluna)
     let tab = document.getElementById("tabuleiro_bem_bolado");
     let todasAsCelulas = tab.getElementsByClassName("celula");
     let indiceDaCelula = (linhaIA * 10) + colunaIA;
@@ -245,7 +245,7 @@ function turnoDaIACPU() {
         celulaIA.classList.add("clicada");
     }
 
-    // NOVO: Validação de Fim de Jogo: se a CPU destruiu todos os barcos do jogador, ela vence
+    // Validação de Fim de Jogo: se a CPU destruiu todos os barcos do jogador, ela vence
     if (barcosRestantesJogador <= 0) {
         pararCronometro();
         finalizarPartida("DERROTA!", "A CPU destruiu toda a sua frota!");
