@@ -140,7 +140,7 @@ function BatalhaNavalCPU() {
 function turnoDaIACPU(sequenciaCPU) {
     if (tirosDisponiveisCPU.length === 0) {
         // Se a IA ficou sem jogadas possíveis e os barcos não zeraram, o jogo acaba ou empata
-        finalizarPartida("FIM DE JOGO", "O mar ficou sem espaço para manobras!");
+        finalizarPartida("FIM DE JOGO", "Não sobrou nada!");
         return;
     }
 
