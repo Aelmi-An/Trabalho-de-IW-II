@@ -1,10 +1,18 @@
 // Áudios específicos para o modo CPU (evita erros de escopo global)
 const BoomCPU = new Audio('Áudios/água.m4a');
+// Som de "água" exclusivo do modo CPU
+
 const XablauCPU = new Audio('Áudios/Navio.m4a');
+// Som de "acertou navio" exclusivo do modo CPU
+
 const KaboomCPU = new Audio('Áudios/Bomba.mp3');
+// Som de "bomba/explosão" exclusivo do modo CPU
 
 // Função utilitária do efeito visual de terremoto
 function dispararTerremoto() {
+// Função compartilhada (usada no modo solo e no modo CPU) que cria um efeito visual 
+// de "tremor" na tela
+
     let tab = document.getElementById("tabuleiro_bem_bolado");
     tab.classList.add("tremer");
     setTimeout(() => {
@@ -17,13 +25,20 @@ if (typeof tirosDisponiveisCPU === 'undefined') {
     var tirosDisponiveisCPU = [];
 }
 
-// Variável para rastrear quantos barcos restam no tabuleiro para validar a vitória
+// Variável para rastrear quantos barcos restam no tabuleiro do BOT (para validar vitória do jogador)
 let barcosRestantesCPU = 0;
+
+// NOVO: Variável para rastrear quantos barcos restam no tabuleiro do JOGADOR (para validar vitória da CPU)
+let barcosRestantesJogador = 0;
+
+// NOVO: Matriz secreta que representa o tabuleiro do JOGADOR, usada pela IA para atirar de verdade
+let sequenciaJogador = [];
 
 // Função principal que monta o modo de jogo contra o Bot
 function BatalhaNavalCPU() {
     modoAtual = 'cpu'; // Atualiza o estado global para o botão reiniciar saber onde voltar
-    barcosRestantesCPU = 0; // Reseta o contador de barcos ativos
+    barcosRestantesCPU = 0; // Reseta o contador de barcos do BOT
+    barcosRestantesJogador = 0; // NOVO: Reseta o contador de barcos do JOGADOR
 
     let tab = document.getElementById("tabuleiro_bem_bolado");
     tab.innerHTML = ""; 
@@ -47,13 +62,26 @@ function BatalhaNavalCPU() {
         let oceano = [];
         for (let coluna = 0; coluna < 10; coluna++) {
             let sorteio = Math.floor(Math.random() * 5);
-            // Incrementa o contador se a casa possuir um segmento de barco (1, 2 ou 3)
             if (sorteio >= 1 && sorteio <= 3) {
                 barcosRestantesCPU++;
             }
             oceano.push(sorteio);
         }
         sequenciaCPU.push(oceano);
+    }
+
+    // NOVO: Gera a matriz secreta de barcos do JOGADOR (é nela que a IA vai realmente atirar)
+    sequenciaJogador = [];
+    for (let linha = 0; linha < 10; linha++) {
+        let oceano = [];
+        for (let coluna = 0; coluna < 10; coluna++) {
+            let sorteio = Math.floor(Math.random() * 5);
+            if (sorteio >= 1 && sorteio <= 3) {
+                barcosRestantesJogador++;
+            }
+            oceano.push(sorteio);
+        }
+        sequenciaJogador.push(oceano);
     }
 
     // Cria e desenha as caixinhas na tela para o modo CPU
@@ -74,8 +102,8 @@ function BatalhaNavalCPU() {
                 tab.style.pointerEvents = "none";
 
                 let opcao = sequenciaCPU[x][y];
+                // O jogador ataca o mapa do BOT (sequenciaCPU) — isso já estava certo
 
-                // Executa a lógica de imagens, sons e pontos específicos do Player na CPU
                 switch (opcao) {
                     case 0: 
                         imageminicial.src = "Imagens/Água.png"; 
@@ -123,7 +151,7 @@ function BatalhaNavalCPU() {
                 // 3. Cria o delay de 1.5 segundos para a IA responder e depois libera o tabuleiro
                 setTimeout(function() {
                     if (typeof turnoDaIACPU === "function") {
-                        turnoDaIACPU(sequenciaCPU);
+                        turnoDaIACPU();
                     }
                     
                     // Libera as caixinhas não clicadas de volta para o jogador
@@ -137,9 +165,11 @@ function BatalhaNavalCPU() {
     }
 }
 
-function turnoDaIACPU(sequenciaCPU) {
+function turnoDaIACPU() {
+// CORRIGIDO: não recebe mais "sequenciaCPU" por parâmetro, pois a IA deve atirar na 
+// matriz do JOGADOR (sequenciaJogador), e não no próprio mapa do BOT
+
     if (tirosDisponiveisCPU.length === 0) {
-        // Se a IA ficou sem jogadas possíveis e os barcos não zeraram, o jogo acaba ou empata
         finalizarPartida("FIM DE JOGO", "Não sobrou nada!");
         return;
     }
@@ -160,12 +190,15 @@ function turnoDaIACPU(sequenciaCPU) {
 
     // Se a célula sorteada já estiver clicada, tenta outra casa imediatamente
     if (celulaIA && celulaIA.classList.contains("clicada")) {
-        turnoDaIACPU(sequenciaCPU); 
+        turnoDaIACPU(); 
         return; 
     }
 
     let imagemIA = celulaIA ? celulaIA.querySelector("img") : null;
-    let opcaoIA = sequenciaCPU[linhaIA][colunaIA]; 
+
+    let opcaoIA = sequenciaJogador[linhaIA][colunaIA]; 
+    // CORRIGIDO: agora a IA lê o ataque na matriz do JOGADOR (sequenciaJogador), 
+    // que é o tabuleiro que ela realmente deveria estar atacando
 
     // 3. Executa a reação visual e sonora do tiro da CPU
     switch (opcaoIA) {
@@ -178,18 +211,22 @@ function turnoDaIACPU(sequenciaCPU) {
             XablauCPU.play(); 
             adicionarPontos('cpu', 321);
             dispararTerremoto(); 
+            barcosRestantesJogador--;
+            // NOVO: diminui o contador de barcos do jogador, já que um segmento foi destruído
             break;
         case 2: 
             if (imagemIA) imagemIA.src = "Imagens/Barcov2.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 231); 
             dispararTerremoto();
+            barcosRestantesJogador--;
             break;
         case 3: 
             if (imagemIA) imagemIA.src = "Imagens/Barcov3.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 132); 
             dispararTerremoto();
+            barcosRestantesJogador--;
             break;
         case 4: 
             if (imagemIA) imagemIA.src = "Imagens/Bomba.png"; 
@@ -204,34 +241,9 @@ function turnoDaIACPU(sequenciaCPU) {
         celulaIA.style.pointerEvents = "none";
         celulaIA.classList.add("clicada");
     }
-}
-function finalizarPartida(titulo, texto) {
-    document.getElementById("mensagem_fim").innerText = titulo;
-    document.getElementById("detalhes_fim").innerText = texto;
-    document.getElementById("tela_fim_jogo").style.display = "block"; 
-    document.getElementById("tabuleiro_bem_bolado").style.pointerEvents = "none"; 
-    
-    // Esconde o botão de "Voltar ao Menu" do meio da partida para não acumular botões
-    document.getElementById("controles_partida").style.display = "none"; 
-}
 
-function reiniciarJogo() {
-    document.getElementById("tela_fim_jogo").style.display = "none";
-    document.getElementById("placar_padrao").style.display = "none";
-    document.getElementById("placar_com_cpu").style.display = "none";
-    document.getElementById("status_solo").style.display = "none";
-    document.getElementById("tabuleiro_bem_bolado").style.pointerEvents = "auto";
-    
-    // Mostra o botão de pânico/retorno novamente
-    document.getElementById("controles_partida").style.display = "block"; 
-
-    zerarPlacar(); 
-
-    if (modoAtual === 'solo') {
-        document.getElementById("placar_padrao").style.display = "flex";
-        BatalhaNaval();
-    } else {
-        document.getElementById("placar_com_cpu").style.display = "flex";
-        BatalhaNavalCPU();
+    // NOVO: Validação de Fim de Jogo: se a CPU destruiu todos os barcos do jogador, ela vence
+    if (barcosRestantesJogador <= 0) {
+        finalizarPartida("DERROTA!", "A CPU destruiu toda a sua frota!");
     }
 }

@@ -42,7 +42,7 @@
     <div id="tabuleiro_bem_bolado" style="display: none;"></div>
 
     <div id="controles_partida" style="display: none; margin-top: 20px;">
-        <button onclick="voltarAoMenu()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer;">Voltar ao Menu</button>
+        <button onclick="voltarAoMenu()" id="Resetbtn">Voltar ao Menu</button>
     </div>
 
     <script src="Javascript/NavalidadesCPU.js"></script>
@@ -50,36 +50,77 @@
     <script src="Javascript/Navalidades.js"></script>
 
     <script>
-        function escolherModo(modo) {
-            document.getElementById("menu_inicial").style.display = "none";
-            
-            let tabuleiro = document.getElementById("tabuleiro_bem_bolado");
-            tabuleiro.style.display = "grid";
-            
-            // Mostra o botão de voltar ao menu durante a partida
-            document.getElementById("controles_partida").style.display = "block";
-            
-            zerarPlacar();
+function escolherModo(modo) {
+// Define a função que decide o que acontece quando o jogador clica em "Jogar Solo" ou "Jogar contra CPU".
+// O parâmetro "modo" recebe a string 'padrao' ou 'cpu', vinda do onclick do botão.
 
-            if (modo === "padrao") {
-                document.getElementById("placar_padrao").style.display = "flex";
-                BatalhaNaval();
-            } else if (modo === "cpu") {
-                document.getElementById("placar_com_cpu").style.display = "flex";
-                BatalhaNavalCPU();
-            }
-        }
+    document.getElementById("menu_inicial").style.display = "none";
+    // Oculta a tela de menu inicial, já que o jogador acabou de escolher um modo
 
-        function voltarAoMenu() {
-            document.getElementById("menu_inicial").style.display = "flex";
-            document.getElementById("tabuleiro_bem_bolado").style.display = "none";
-            document.getElementById("controles_partida").style.display = "none";
-            document.getElementById("tela_fim_jogo").style.display = "none";
-            document.getElementById("placar_padrao").style.display = "none";
-            document.getElementById("placar_com_cpu").style.display = "none";
-            document.getElementById("status_solo").style.display = "none";
-            zerarPlacar();
-        }
+    let tabuleiro = document.getElementById("tabuleiro_bem_bolado");
+    // Guarda numa variável a referência do elemento do tabuleiro (evita buscar duas vezes no DOM)
+
+    tabuleiro.style.display = "grid";
+    // Exibe o tabuleiro usando display "grid" (provavelmente o CSS organiza as células do jogo em grade)
+
+    document.getElementById("controles_partida").style.display = "block";
+    // Mostra o botão "Voltar ao Menu", que fica escondido enquanto não há partida em andamento
+
+    zerarPlacar();
+    // Chama uma função (definida em Placar_mal_bolado.js) que reseta os pontos para 0,
+    // garantindo que uma partida nova comece zerada
+
+    if (modo === "padrao") {
+    // Verifica se o modo escolhido foi o solo
+
+        document.getElementById("placar_padrao").style.display = "flex";
+        // Exibe o placar do modo solo (usando display "flex" para alinhar os elementos)
+
+        BatalhaNaval();
+        // Chama a função principal do modo solo (definida em Navalidades.js), que provavelmente 
+        // inicia o tabuleiro, posiciona os navios e começa o jogo
+
+    } else if (modo === "cpu") {
+    // Caso contrário, verifica se o modo escolhido foi contra a CPU
+
+        document.getElementById("placar_com_cpu").style.display = "flex";
+        // Exibe o placar do modo contra CPU (jogador + CPU)
+
+        BatalhaNavalCPU();
+        // Chama a função principal do modo CPU (definida em NavalidadesCPU.js), que inicia 
+        // a partida contra a inteligência artificial
+    }
+}
+
+function voltarAoMenu() {
+// Define a função chamada quando o jogador clica em "Voltar ao Menu" durante a partida
+
+    document.getElementById("menu_inicial").style.display = "flex";
+    // Reexibe o menu inicial (usando "flex" para manter o layout correto)
+
+    document.getElementById("tabuleiro_bem_bolado").style.display = "none";
+    // Esconde o tabuleiro, já que o jogador saiu da partida
+
+    document.getElementById("controles_partida").style.display = "none";
+    // Esconde o botão "Voltar ao Menu", pois não há mais partida ativa
+
+    document.getElementById("tela_fim_jogo").style.display = "none";
+    // Garante que a tela de fim de jogo (vitória/derrota) também fique escondida,
+    // caso estivesse visível antes de voltar ao menu
+
+    document.getElementById("placar_padrao").style.display = "none";
+    // Esconde o placar do modo solo
+
+    document.getElementById("placar_com_cpu").style.display = "none";
+    // Esconde o placar do modo CPU
+
+    document.getElementById("status_solo").style.display = "none";
+    // Esconde o contador de vidas do modo solo
+
+    zerarPlacar();
+    // Zera o placar novamente, garantindo que, ao iniciar uma nova partida pelo menu, 
+    // os pontos comecem do zero
+}
     </script>
     </body>
 </html>
