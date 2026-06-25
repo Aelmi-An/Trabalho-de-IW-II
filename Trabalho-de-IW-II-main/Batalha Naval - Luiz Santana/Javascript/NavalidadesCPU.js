@@ -74,7 +74,7 @@ function BatalhaNavalCPU() {
         sequenciaCPU.push(oceano);
     }
 
-    // NOVO: Gera a matriz secreta de barcos do JOGADOR (é nela que a IA vai realmente atirar)
+    // NOVO: Gera a matriz secreta de barcos do JOGADOR 
     sequenciaJogador = [];
     for (let linha = 0; linha < 10; linha++) {
         let oceano = [];
@@ -203,8 +203,6 @@ function turnoDaIACPU() {
     let imagemIA = celulaIA ? celulaIA.querySelector("img") : null;
 
     let opcaoIA = sequenciaJogador[linhaIA][colunaIA]; 
-    // CORRIGIDO: agora a IA lê o ataque na matriz do JOGADOR (sequenciaJogador), 
-    // que é o tabuleiro que ela realmente deveria estar atacando
 
     // 3. Executa a reação visual e sonora do tiro da CPU
     switch (opcaoIA) {
