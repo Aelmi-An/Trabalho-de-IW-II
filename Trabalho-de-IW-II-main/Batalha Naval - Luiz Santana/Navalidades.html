@@ -12,6 +12,10 @@
         <h1>Batalha Naval!</h1>
     </div>
 
+    <div id="painel_tempo" style="display: none;">
+    Tempo de Operação: <span id="cronometro">00:00</span>
+</div>
+
     <div id="menu_inicial">
         <h2>Escolha o Modo de Jogo:</h2>
         <div class="botoes_container">
@@ -70,6 +74,9 @@ function escolherModo(modo) {
     // Chama uma função (definida em Placar_mal_bolado.js) que reseta os pontos para 0,
     // garantindo que uma partida nova comece zerada
 
+    iniciarCronometro();
+    //Inicia a contagem do cronômetro, que mede o tempo de duração da partida.
+
     if (modo === "padrao") {
     // Verifica se o modo escolhido foi o solo
 
@@ -116,6 +123,12 @@ function voltarAoMenu() {
 
     document.getElementById("status_solo").style.display = "none";
     // Esconde o contador de vidas do modo solo
+
+    pararCronometro();
+    // INTERRUPÇÃO: Interrompe o setInterval imediatamente para travar os segundos.
+    
+    document.getElementById("painel_tempo").style.display = "none";
+    // LIMPEZA: Esconde o painel com o tempo da interface, já que o jogador retornou ao menu inicial.
 
     zerarPlacar();
     // Zera o placar novamente, garantindo que, ao iniciar uma nova partida pelo menu, 

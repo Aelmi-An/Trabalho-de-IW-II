@@ -225,6 +225,9 @@ function BatalhaNaval() {
 function finalizarPartida(titulo, texto) {
 // Função que finaliza a partida, recebendo um título (ex: "VITÓRIA!") e um texto de detalhe
 
+    pararCronometro();
+    // Para o cronômetro imediatamente, travando o tempo final da partida
+
     document.getElementById("mensagem_fim").innerText = titulo;
     // Define o texto do título de fim de jogo
 
@@ -243,6 +246,9 @@ function finalizarPartida(titulo, texto) {
 
 function reiniciarJogo() {
 // Função que reinicia o jogo (chamada pelo botão "Jogar Novamente")
+
+    iniciarCronometro();
+    // Reinicia o cronômetro para a nova partida.
 
     document.getElementById("tela_fim_jogo").style.display = "none";
     // Esconde a tela de fim de jogo

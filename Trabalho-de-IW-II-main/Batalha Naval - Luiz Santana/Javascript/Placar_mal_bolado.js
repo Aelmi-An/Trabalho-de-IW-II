@@ -8,6 +8,35 @@ let pontosPlayer = 0;
 let pontosCPU = 0;
 // Variável global que guarda a pontuação da CPU no modo contra CPU
 
+function iniciarCronometro() {
+    // Garante que não existem dois cronômetros rodando juntos se o usuário clicar rápido
+    clearInterval(intervaloCronometro); 
+    tempoSegundos = 0; 
+    
+    // Mostra o painel do tempo na tela mudando o display
+    document.getElementById("painel_tempo").style.display = "block";
+
+    // O setInterval executa o código interno repetidamente a cada 1000ms (1 segundo)
+    intervaloCronometro = setInterval(() => {
+        tempoSegundos++;
+        
+        // Formatação matemática para transformar segundos em MM:SS
+        let minutos = Math.floor(tempoSegundos / 60);
+        let segundos = tempoSegundos % 60;
+        
+        // Operador ternário: se for menor que 10, adiciona um "0" na frente de texto
+        let minFormatado = minutos < 10 ? "0" + minutos : minutos;
+        let segFormatado = segundos < 10 ? "0" + segundos : segundos;
+        
+        // Injeta o tempo formatado na tela
+        document.getElementById("cronometro").innerText = `${minFormatado}:${segFormatado}`;
+    }, 1000); 
+}
+
+function pararCronometro() {
+    // Para o setInterval de continuar contando
+    clearInterval(intervaloCronometro);
+}
 // Atualiza os números que aparecem no HTML
 function atualizarTelaDoPlacar() {
 // Função responsável por refletir na tela (HTML) os valores atuais das variáveis de pontos

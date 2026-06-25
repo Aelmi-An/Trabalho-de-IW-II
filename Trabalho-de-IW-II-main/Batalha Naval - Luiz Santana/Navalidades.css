@@ -344,28 +344,125 @@ body {
        Essa classe é adicionada/removida via JavaScript (função dispararTerremoto()) */
 }
 
-#Resetbtn{
-    background-color: rgba(10, 33, 61, 0.8);
-    /* Cor de fundo do botão "Voltar ao Menu": azul escuro semi-transparente */
+/* Linhas táticas decorativas nos cantos superiores */
+body::before {
+    content: "[ DEPLOYED RADAR SYSTEM ]";
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
 
-    color: white;
-    /* Cor do texto do botão: branco */
+body::after {
+    content: "SYS_STATUS: ACTIVE";
+    position: absolute;
+    bottom: 25px;
+    right: 35px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
 
-    border: none;
-    /* Remove a borda padrão do botão */
-
+#painel_tempo {
+    font-family: 'Courier New', Courier, monospace;
+    color: #00f7ff;
+    background-color: rgba(10, 25, 47, 0.9);
     padding: 10px 20px;
-    /* Espaçamento interno: 10px em cima/baixo, 20px nas laterais */
-
-    font-size: 16px;
-    /* Tamanho do texto do botão */
-
+    border: 1px solid #00f7ff;
+    border-radius: 6px;
+    font-size: 18px;
     font-weight: bold;
-    /* Texto em negrito */
+    margin-bottom: 15px;
+}
 
-    border-radius: 6px; 
-    /* Cantos arredondados do botão */
+/* PAINEL DA TELA DE FIM DE JOGO (RESOLVE O PROBLEMA DE CONTRASTE) */
 
+#tela_fim_jogo {
+    background-color: rgba(10, 25, 47, 0.95); /* Fundo escuro militar para dar contraste */
+    border: 2px solid #ff3333; /* Borda vermelha de "ALERTA/PERIGO" combinando com derrota */
+    padding: 25px 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.3); /* Brilho neon vermelho sutil */
+    margin-bottom: 20px;
+    
+    /* Organiza o h1, o p e o botão perfeitamente alinhados em coluna */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Força o título a ficar destacado em vermelho tático */
+#mensagem_fim {
+    color: #ff3333; 
+    font-size: 32px;
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Força o texto secundário ("Suas vidas acabaram") a ficar em branco puro legível */
+#detalhes_fim {
+    color: #ffffff; 
+    font-size: 16px;
+    margin: 0;
+}
+
+/* SEÇÃO: BOTÕES DE CONTROLE DA PARTIDA (JOGAR NOVAMENTE & VOLTAR AO MENU)
+   Estilização tática/neon para os botões de fim de jogo e reset.*/
+
+#btn_reiniciar, #Resetbtn {
+    /* Define a cor de fundo usando o azul aço militar padrão do menu inicial */
+    background-color: #00aaff; 
+
+    /* Define a cor do texto como azul bem escuro para garantir um contraste nítido e legível */
+    color: #0a192f; 
+
+    /* Adiciona uma borda fina em tom ciano vibrante para reforçar a estética de radar/neon */
+    border: 2px solid #00f7ff; 
+
+    /* Define o espaçamento interno do botão: 12px de altura (topo/base) e 24px de largura (laterais) */
+    padding: 12px 24px; 
+
+    /* Define o tamanho da fonte interna do botão */
+    font-size: 18px; 
+
+    /* Força o botão a usar a mesma fonte monoespaçada e tática do restante do jogo */
+    font-family: 'Courier New', Courier, monospace; 
+
+    /* Deixa o texto em negrito para dar mais destaque às opções */
+    font-weight: bold;
+
+    /* Transforma todo o texto do botão em letras maiúsculas (caixa alta) */
+    text-transform: uppercase; 
+
+    /* Arredonda levemente os cantos do botão em 6px */
+    border-radius: 6px;
+
+    /* Transforma o cursor do mouse na "mãozinha" de clique quando passa por cima do botão */
     cursor: pointer;
-    /* Cursor de "mãozinha" ao passar o mouse, indicando que é clicável */
+
+    /* Cria um efeito de brilho azul suave (sombra externa) ao redor do botão */
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.4); 
+
+    /* Margem superior de 20px para afastar o botão dos textos ou elementos logo acima dele */
+    margin-top: 20px; 
+
+    /* Suaviza a transição de TODAS as propriedades (cor, brilho, tamanho) em 0.3 segundos ao interagir */
+    transition: all 0.3s ease-in-out; 
+}
+
+/* EFEITO HOVER: Ativado quando o usuário passa o ponteiro do mouse sobre os botões*/
+#btn_reiniciar:hover, #Resetbtn:hover {
+    /* Muda o fundo para um tom ligeiramente mais escuro/fechado de ciano */
+    background-color: #17afd4; 
+
+    /* Intensifica o brilho azul (aumenta o raio de 10px para 20px e a opacidade para 0.8), simulando que o neon "acendeu" */
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.8); 
+
+    /* Faz o botão aumentar levemente de tamanho (5% maior) para dar uma resposta visual de clique */
+    transform: scale(1.05); 
 }

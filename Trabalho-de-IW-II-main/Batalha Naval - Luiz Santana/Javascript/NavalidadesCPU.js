@@ -1,3 +1,7 @@
+//declarando variáveis de tempo.
+let tempoSegundos = 0;
+let intervaloCronometro = null;
+
 // Áudios específicos para o modo CPU (evita erros de escopo global)
 const BoomCPU = new Audio('Áudios/água.m4a');
 // Som de "água" exclusivo do modo CPU
@@ -144,6 +148,7 @@ function BatalhaNavalCPU() {
 
                 // Validação de Fim de Jogo: se o jogador limpou o mapa do bot
                 if (barcosRestantesCPU <= 0) {
+                    pararCronometro();
                     finalizarPartida("VITÓRIA!", "Você derrotou a CPU e destruiu toda a frota!");
                     return;
                 }
@@ -170,6 +175,7 @@ function turnoDaIACPU() {
 // matriz do JOGADOR (sequenciaJogador), e não no próprio mapa do BOT
 
     if (tirosDisponiveisCPU.length === 0) {
+        pararCronometro();
         finalizarPartida("FIM DE JOGO", "Não sobrou nada!");
         return;
     }
@@ -244,6 +250,7 @@ function turnoDaIACPU() {
 
     // NOVO: Validação de Fim de Jogo: se a CPU destruiu todos os barcos do jogador, ela vence
     if (barcosRestantesJogador <= 0) {
+        pararCronometro();
         finalizarPartida("DERROTA!", "A CPU destruiu toda a sua frota!");
     }
 }
