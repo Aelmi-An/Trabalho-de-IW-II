@@ -3,6 +3,19 @@ const BoomCPU = new Audio('Áudios/água.m4a');
 const XablauCPU = new Audio('Áudios/Navio.m4a');
 const KaboomCPU = new Audio('Áudios/Bomba.mp3');
 
+// Crie essa função utilitária no seu arquivo para reutilizar facilmente
+function dispararTerremoto() {
+    let tab = document.getElementById("tabuleiro_bem_bolado");
+    
+    // Adiciona a classe que faz tremer
+    tab.classList.add("tremer");
+    
+    // Remove a classe após 1 segundo (1000ms) para deixar pronto para o próximo acerto
+    setTimeout(() => {
+        tab.classList.remove("tremer");
+    }, 1000);
+}
+
 // Verifica se a lista de tiros da IA já existe para não dar erro de duplicação
 if (typeof tirosDisponiveisCPU === 'undefined') {
     var tirosDisponiveisCPU = [];
@@ -60,21 +73,25 @@ function BatalhaNavalCPU() {
                         imageminicial.src = "Imagens/Barcov1.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 321); 
+                        dispararTerremoto();
                         break;
                     case 2: 
                         imageminicial.src = "Imagens/Barcov2.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 231); 
+                        dispararTerremoto();
                         break;
                     case 3: 
                         imageminicial.src = "Imagens/Barcov3.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 132); 
+                        dispararTerremoto();
                         break;
                     case 4: 
                         imageminicial.src = "Imagens/Bomba.png"; 
                         KaboomCPU.play(); 
                         adicionarPontos('player', -123)
+                        dispararTerremoto();
                         break;
                 }
 
@@ -134,22 +151,26 @@ function turnoDaIACPU(sequenciaCPU) {
         case 1: 
             if (imagemIA) imagemIA.src = "Imagens/Barcov1.png"; 
             XablauCPU.play(); 
-            adicionarPontos('cpu', 321); 
+            adicionarPontos('cpu', 321);
+            dispararTerremoto(); 
             break;
         case 2: 
             if (imagemIA) imagemIA.src = "Imagens/Barcov2.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 231); 
+            dispararTerremoto();
             break;
         case 3: 
             if (imagemIA) imagemIA.src = "Imagens/Barcov3.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 132); 
+            dispararTerremoto();
             break;
         case 4: 
             if (imagemIA) imagemIA.src = "Imagens/Bomba.png"; 
             KaboomCPU.play(); 
-            adicionarPontos('cpu', -123)
+            adicionarPontos('cpu', -123);
+            dispararTerremoto();
             break;
     }
 
