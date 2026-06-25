@@ -38,7 +38,7 @@ function BatalhaNavalCPU() {
             celula.classList.add("celula");
 
             let imageminicial = document.createElement("img");
-            imageminicial.src = "Imagens/prontopraplay.png";
+            imageminicial.src = "Imagens/Mira.png";
             imageminicial.style.height = "100%";
             imageminicial.style.width = "100%";
             celula.appendChild(imageminicial);
@@ -53,26 +53,26 @@ function BatalhaNavalCPU() {
                 // Executa a lógica de imagens, sons e pontos específicos do Player na CPU
                 switch (opcao) {
                     case 0: 
-                        imageminicial.src = "Imagens/wave.png"; 
+                        imageminicial.src = "Imagens/Água.png"; 
                         BoomCPU.play(); 
                         break;
                     case 1: 
-                        imageminicial.src = "Imagens/Ship-1.png"; 
+                        imageminicial.src = "Imagens/Barcov1.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 321); 
                         break;
                     case 2: 
-                        imageminicial.src = "Imagens/Ship-2.png"; 
+                        imageminicial.src = "Imagens/Barcov2.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 231); 
                         break;
                     case 3: 
-                        imageminicial.src = "Imagens/Ship-3.png"; 
+                        imageminicial.src = "Imagens/Barcov3.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 132); 
                         break;
                     case 4: 
-                        imageminicial.src = "Imagens/bomba.png"; 
+                        imageminicial.src = "Imagens/Bomba.png"; 
                         KaboomCPU.play(); 
                         adicionarPontos('player', -123)
                         break;
@@ -128,26 +128,26 @@ function turnoDaIACPU(sequenciaCPU) {
     // 3. Executa a reação visual e sonora do tiro da CPU
     switch (opcaoIA) {
         case 0: 
-            if (imagemIA) imagemIA.src = "Imagens/wave.png"; 
+            if (imagemIA) imagemIA.src = "Imagens/Água.png"; 
             BoomCPU.play(); 
             break;
         case 1: 
-            if (imagemIA) imagemIA.src = "Imagens/Ship-1.png"; 
+            if (imagemIA) imagemIA.src = "Imagens/Barcov1.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 321); 
             break;
         case 2: 
-            if (imagemIA) imagemIA.src = "Imagens/Ship-2.png"; 
+            if (imagemIA) imagemIA.src = "Imagens/Barcov2.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 231); 
             break;
         case 3: 
-            if (imagemIA) imagemIA.src = "Imagens/Ship-3.png"; 
+            if (imagemIA) imagemIA.src = "Imagens/Barcov3.png"; 
             XablauCPU.play(); 
             adicionarPontos('cpu', 132); 
             break;
         case 4: 
-            if (imagemIA) imagemIA.src = "Imagens/bomba.png"; 
+            if (imagemIA) imagemIA.src = "Imagens/Bomba.png"; 
             KaboomCPU.play(); 
             adicionarPontos('cpu', -123)
             break;

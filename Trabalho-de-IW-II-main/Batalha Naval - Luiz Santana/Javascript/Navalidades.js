@@ -23,7 +23,7 @@ function BatalhaNaval() {
             celula.classList.add("celula");
 
             let imageminicial = document.createElement("img");
-            imageminicial.src = "Imagens/prontopraplay.png";
+            imageminicial.src = "Imagens/Mira.png";
             imageminicial.style.height = "100%";
             imageminicial.style.width = "100%";
             celula.appendChild(imageminicial);
@@ -36,11 +36,11 @@ function BatalhaNaval() {
                 let opcao = sequencia[x][y];
 
                 switch (opcao) {
-                    case 0: imageminicial.src = "Imagens/wave.png"; Boom.play(); break;
-                    case 1: imageminicial.src = "Imagens/Ship-1.png"; Xablau.play(); adicionarPontos('solo', 321); break;
-                    case 2: imageminicial.src = "Imagens/Ship-2.png"; Xablau.play(); adicionarPontos('solo', 231); break;
-                    case 3: imageminicial.src = "Imagens/Ship-3.png"; Xablau.play(); adicionarPontos('solo', 132); break;
-                    case 4: imageminicial.src = "Imagens/bomba.png"; Kaboom.play(); break;
+                    case 0: imageminicial.src = "Imagens/Água.png"; Boom.play(); break;
+                    case 1: imageminicial.src = "Imagens/Barcov1.png"; Xablau.play(); adicionarPontos('solo', 321); break;
+                    case 2: imageminicial.src = "Imagens/Barcov2.png"; Xablau.play(); adicionarPontos('solo', 231); break;
+                    case 3: imageminicial.src = "Imagens/Barcov3.png"; Xablau.play(); adicionarPontos('solo', 132); break;
+                    case 4: imageminicial.src = "Imagens/Bomba.png"; Kaboom.play(); break;
                 }
 
                 // 2. Garante que ESTA célula específica nunca mais possa ser clicada
