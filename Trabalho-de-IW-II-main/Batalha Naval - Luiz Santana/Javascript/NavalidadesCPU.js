@@ -32,10 +32,10 @@ if (typeof tirosDisponiveisCPU === 'undefined') {
 // Variável para rastrear quantos barcos restam no tabuleiro do BOT (para validar vitória do jogador)
 let barcosRestantesCPU = 0;
 
-// NOVO: Variável para rastrear quantos barcos restam no tabuleiro do JOGADOR (para validar vitória da CPU)
+// Variável para rastrear quantos barcos restam no tabuleiro do JOGADOR (para validar vitória da CPU)
 let barcosRestantesJogador = 0;
 
-// NOVO: Matriz secreta que representa o tabuleiro do JOGADOR, usada pela IA para atirar de verdade
+// Matriz secreta que representa o tabuleiro do JOGADOR, usada pela IA para atirar de verdade
 let sequenciaJogador = [];
 
 // Função principal que monta o modo de jogo contra o Bot
@@ -74,7 +74,7 @@ function BatalhaNavalCPU() {
         sequenciaCPU.push(oceano);
     }
 
-    // NOVO: Gera a matriz secreta de barcos do JOGADOR 
+    // Gera a matriz secreta de barcos do JOGADOR 
     sequenciaJogador = [];
     for (let linha = 0; linha < 10; linha++) {
         let oceano = [];
@@ -171,8 +171,7 @@ function BatalhaNavalCPU() {
 }
 
 function turnoDaIACPU() {
-// CORRIGIDO: não recebe mais "sequenciaCPU" por parâmetro, pois a IA deve atirar na 
-// matriz do JOGADOR (sequenciaJogador), e não no próprio mapa do BOT
+// A CPU recebe o "tabuleiro do jogador"
 
     if (tirosDisponiveisCPU.length === 0) {
         pararCronometro();
