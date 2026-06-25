@@ -1,0 +1,468 @@
+body {
+    font-family: 'Courier New', Courier, monospace; /* Fonte estilo computador/radar militar */
+    /* Define a fonte do texto. Se "Courier New" não estiver disponível, usa "Courier", 
+       e se nenhuma das duas existir, cai para qualquer fonte monoespaçada (monospace) do sistema */
+
+    color: #00ccff; /* Texto verde neon tático */
+    /* Define a cor do texto (na verdade é um azul ciano neon, o comentário original 
+       diz "verde" mas o código #00ccff é um tom de azul/ciano) */
+    
+    /* Fundo temático: simula um radar escuro com linhas de grade */
+    background-color: #87d0ec; 
+    /* Cor de fundo base (um azul claro), usada como camada por trás do gradiente */
+
+    background-image: 
+        linear-gradient(rgba(0, 255, 102, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 102, 0.03) 1px, transparent 1px);
+    /* Cria duas linhas de gradiente bem sutis (opacidade 0.03, quase invisíveis):
+       - a primeira cria linhas HORIZONTAIS
+       - a segunda (com "90deg", rotacionada) cria linhas VERTICAIS
+       Juntas, formam um padrão de grade, como se fosse uma tela de radar */
+
+    background-size: 50px 50px; /* Alinha o fundo com o tamanho das células do tabuleiro */
+    /* Define o tamanho de cada "quadrado" da grade de fundo como 50x50px, 
+       igualando ao tamanho das células do tabuleiro do jogo (efeito visual combinando) */
+
+    border: 14px solid rgba(10, 33, 66, 0.8);
+    /* Cria uma borda grossa (14px) de cor azul escura semi-transparente em volta de TODO o body, 
+       como uma "moldura" da página */
+    
+    /* Centraliza tudo na tela (horizontal e vertical) */
+    display: flex;
+    /* Transforma o body em um container flexível, permitindo alinhar seus filhos facilmente */
+
+    flex-direction: column;
+    /* Define que os elementos filhos do body serão organizados em COLUNA 
+       (um abaixo do outro, em vez de lado a lado) */
+
+    align-items: center;
+    /* Centraliza os elementos filhos HORIZONTALMENTE (no eixo cruzado, já que a direção é coluna) */
+
+    justify-content: center;
+    /* Centraliza os elementos filhos VERTICALMENTE (no eixo principal, que é a coluna) */
+
+    /* Força o fundo a ocupar 100% da altura da tela */
+    min-height: 100vh;
+    /* Garante que o body tenha pelo menos a altura total da tela (100% da viewport height),
+       mesmo que o conteúdo seja pequeno — assim o fundo cobre a tela inteira */
+
+    margin: 0;
+    /* Remove a margem padrão que os navegadores aplicam ao body, evitando espaços 
+       em branco indesejados nas bordas da página */
+
+}
+
+/* FORMATANDO O CABEÇALHO DO SEU HTML */
+#cabecalho {
+    text-align: center;
+    /* Centraliza o texto dentro do cabeçalho */
+
+    margin-bottom: 20px;
+    /* Cria um espaço de 20px abaixo do cabeçalho, separando-o do próximo elemento */
+
+    padding: 10px 30px;
+    /* Espaçamento interno: 10px em cima/baixo, 30px nas laterais */
+
+    border: 2px solid #11cee7; /* Borda verde tática */
+    /* Cria uma borda fina (2px) em tom de ciano/azul claro em volta do cabeçalho */
+
+    border-radius: 4px;
+    /* Arredonda levemente os cantos da borda (4px de raio) */
+
+    background-color: rgba(10, 33, 61, 0.8);
+    /* Cor de fundo do cabeçalho: azul bem escuro, com 80% de opacidade 
+       (deixa ver um pouco do fundo da página por trás) */
+
+    box-shadow: 0 0 15px rgba(31, 127, 252, 0.3); /* Brilho neon leve */
+    /* Cria uma sombra suave e espalhada (15px de raio) em tom azul, simulando um "brilho neon" 
+       ao redor do cabeçalho */
+}
+
+#cabecalho h1 {
+    margin: 0;
+    /* Remove a margem padrão do h1, evitando espaços extras indesejados */
+
+    font-size: 28px;
+    /* Define o tamanho da fonte do título como 28px */
+
+    letter-spacing: 3px;
+    /* Aumenta o espaçamento entre as letras em 3px, dando um efeito mais "espaçado"/tático */
+
+    text-transform: uppercase;
+    /* Força o texto a aparecer todo em LETRAS MAIÚSCULAS, independente de como foi escrito no HTML */
+}
+
+#placar_padrao, #placar_com_cpu, #status_solo {
+/* Aplica os mesmos estilos para os três elementos (placar do modo solo, placar do modo CPU, 
+   e o contador de vidas), já que visualmente eles têm a mesma "caixa" de exibição */
+
+    display: flex;
+    /* Container flexível, para organizar os itens internos (ex: "Pontos:" e o número) lado a lado */
+
+    justify-content: space-around; 
+    /* Distribui os itens internos com espaços iguais entre eles e nas bordas */
+
+    width: 100%;                 /* Força o placar a ocupar o espaço da tela */
+    /* Faz o placar tentar ocupar 100% da largura disponível */
+
+    max-width: 450px;            /* Mas limita a 450px para não espalhar demais */
+    /* Mas impede que ultrapasse 450px de largura, mesmo em telas grandes */
+
+    margin-bottom: 20px;          
+    /* Espaço de 20px abaixo do placar, separando do próximo elemento */
+
+    font-size: 20px;
+    /* Tamanho da fonte do texto dentro do placar */
+
+    font-weight: bold;
+    /* Texto em negrito, para destacar os números/pontuação */
+
+    align-items: center;
+    /* Centraliza verticalmente os itens dentro do placar */
+
+    /* Melhoria do placar estilo painel digital */
+    background-color: rgba(10, 25, 47, 0.9);
+    /* Fundo escuro quase opaco (90%), dando aspecto de "painel digital" */
+
+    padding: 12px;
+    /* Espaçamento interno de 12px em todas as direções */
+
+    border: 1px solid #00f7ff;
+    /* Borda fina em ciano vibrante, reforçando o tema futurista/militar */
+
+    border-radius: 6px;
+    /* Cantos arredondados em 6px */
+
+    box-shadow: inset 0 0 10px rgba(4, 211, 248, 0.2);
+    /* Sombra INTERNA (inset) suave, criando um efeito de "luz vindo de dentro" do painel */
+}
+
+#menu_inicial {
+    background-color: rgba(32, 56, 85, 0.95); /* Azul escuro militar semi-transparente */
+    /* Fundo do menu inicial: azul escuro, quase opaco (95%) */
+
+    border: 2px solid #00aaff; /* Detalhes em azul claro */
+    /* Borda de 2px em azul claro vibrante */
+
+    /* Espaçamento interno do card do menu */
+    padding: 30px;
+    /* Espaço interno generoso de 30px, dando "respiro" ao conteúdo do menu */
+
+    border-radius: 12px;
+    /* Cantos bem arredondados (12px), dando aspecto de "cartão" (card) */
+
+    /* Sombra mais pesada para destacar do fundo escuro */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    /* Sombra preta, deslocada 10px para baixo e com espalhamento de 25px, 
+       dando profundidade/destaque ao menu em relação ao fundo */
+
+    text-align: center;
+    /* Centraliza o texto dentro do menu */
+
+    /* Alinha o título e os botões um embaixo do outro */
+    display: flex;
+    flex-direction: column;
+    /* Container flexível em coluna, organizando o h2 e os botões verticalmente */
+
+    /* Espaço fixed de 15px entre cada elemento do menu */
+    gap: 15px;
+    /* Cria um espaçamento uniforme de 15px entre cada filho direto do menu 
+       (h2, div de botões, etc.), sem precisar usar margin manualmente em cada um */
+}
+
+#menu_inicial h2 {
+    color: #ffffff;
+    /* Cor do texto do subtítulo: branco puro */
+
+    font-size: 18px;
+    /* Tamanho de fonte do subtítulo */
+
+    margin: 0 0 5px 0;
+    /* Remove margens de cima, direita e esquerda, deixando só 5px de margem abaixo do texto 
+       (formato: topo, direita, baixo, esquerda) */
+}
+
+#menu_inicial button {
+    background-color: #00aaff; /* Azul aço militar */
+    /* Cor de fundo dos botões do menu */
+
+    color: #0a192f; /* Texto escuro para contrastar */
+    /* Cor do texto dos botões: azul bem escuro, para contrastar com o fundo claro do botão */
+
+    border: none;
+    /* Remove a borda padrão que os navegadores aplicam a botões */
+
+    padding: 12px 24px;
+    /* Espaçamento interno: 12px em cima/baixo, 24px nas laterais (deixa o botão "largo") */
+
+    font-size: 16px;
+    /* Tamanho do texto dentro do botão */
+
+    font-weight: bold;
+    /* Texto em negrito */
+
+    text-transform: uppercase; /* Botões em caixa alta */
+    /* Força o texto do botão a aparecer em maiúsculas */
+
+    border-radius: 6px;
+    /* Cantos arredondados do botão */
+
+    /* Transforma a seta do mouse na "mãozinha" de clique */
+    cursor: pointer;
+    /* Faz o cursor do mouse virar uma "mãozinha" ao passar sobre o botão, 
+       indicando visualmente que é clicável */
+
+    /* Suaviza a troca de cor ao passar o mouse */
+    transition: all 0.2s ease-in-out;
+    /* Anima suavemente (em 0.2 segundos) qualquer propriedade que mudar 
+       (ex: cor de fundo, sombra), em vez de trocar abruptamente */
+}
+
+#menu_inicial button:hover {
+    /* Estilo aplicado SOMENTE quando o mouse está sobre o botão (hover = passar o mouse) */
+
+    /* Transiciona para o verde tático e adiciona brilho */
+    background-color: #17afd4;
+    /* Muda a cor de fundo do botão para um tom levemente diferente de azul/ciano ao passar o mouse 
+       (o comentário diz "verde", mas o código é outro tom de azul) */
+
+    box-shadow: 0 0 12px rgba(9, 162, 182, 0.6);
+    /* Adiciona um brilho/sombra ao redor do botão, simulando um efeito neon ao passar o mouse */
+}
+
+#tabuleiro_bem_bolado {
+    display: grid;
+    /* Define que esse elemento organiza seus filhos (as células) em formato de GRADE (grid) */
+
+    /* Cria a grade de 10 colunas por 10 linhas, cada uma com 50px */
+    grid-template-columns: repeat(10, 50px);
+    /* Cria 10 colunas, cada uma com exatamente 50px de largura */
+
+    grid-template-rows: repeat(10, 50px);
+    /* Cria 10 linhas, cada uma com exatamente 50px de altura.
+       Junto com as colunas, forma uma grade 10x10 = 100 células, igual ao tabuleiro do jogo */
+
+    /* Pequeno espaço de 2px entre as caixinhas */
+    gap: 2px;
+    /* Define um espaçamento de 2px entre cada célula da grade (tanto entre linhas quanto colunas) */
+    
+    /* Moldura externa do tabuleiro */
+    background-color: #0f2b46;
+    /* Cor de fundo do tabuleiro (visível nos espaços entre as células, por causa do "gap") */
+
+    padding: 10px;
+    /* Espaçamento interno de 10px entre a borda do tabuleiro e as células, criando uma "moldura" */
+
+    border: 3px solid #00aaff;
+    /* Borda de 3px em azul claro, delimitando visualmente o tabuleiro */
+
+    border-radius: 8px;
+    /* Cantos arredondados do tabuleiro (8px) */
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.6);
+    /* Sombra escura, deslocada 12px para baixo, com espalhamento de 24px, 
+       dando a impressão de que o tabuleiro está "flutuando" sobre a página */
+}
+
+.celula {
+    width: 50px;
+    /* Largura fixa de cada célula: 50px (combinando com o tamanho definido no grid do tabuleiro) */
+
+    height: 50px;
+    /* Altura fixa de cada célula: 50px */
+
+    border: 1px solid rgba(0, 170, 255, 0.4); /* Linhas divisórias azuis e suaves */
+    /* Borda fina e semi-transparente em azul, separando visualmente cada célula */
+
+    /* Esconde qualquer rebarba ou sobra da imagem interna */
+    overflow: hidden;
+    /* Esconde qualquer conteúdo que "vaze" para fora dos limites da célula 
+       (ex: se a imagem interna for um pouco maior que a célula) */
+
+    background-color: #eceff1; /* Cor interna simulando água profunda */
+    /* Cor de fundo de cada célula: um cinza/branco claro 
+       (o comentário diz "água profunda", mas a cor escolhida é bem clara) */
+
+    transition: background-color 0.2s;
+    /* Anima suavemente (em 0.2s) qualquer mudança na cor de fundo da célula, 
+       como no efeito de hover abaixo */
+}
+
+/* Efeito básico ao passar o mouse sobre os quadradinhos do mar */
+.celula:hover {
+    background-color: #204572;
+    /* Quando o mouse passa sobre uma célula (ainda não clicada), o fundo dela 
+       muda para um azul escuro, dando feedback visual de que é interativa */
+}
+
+.celula img {
+    width: 100%;
+    /* A imagem dentro da célula ocupa 100% da largura da célula */
+
+    height: 100%;
+    /* E 100% da altura da célula */
+    
+    object-fit: contain;
+    /* Garante que a imagem seja redimensionada para CABER inteira dentro da célula, 
+       mantendo sua proporção original (sem cortar ou distorcer) */
+}
+
+/* O efeito de terremoto propriamente dito */
+@keyframes terremoto {
+/* Define uma animação chamada "terremoto", com vários momentos (de 0% a 100% do tempo total) 
+   especificando como o elemento deve se mover */
+
+    0% { transform: translate(0, 0); }
+    /* No início (0%), o elemento está na posição original, sem deslocamento */
+
+    10% { transform: translate(-3px, 2px); }
+    /* Em 10% do tempo, desloca 3px para a esquerda e 2px para baixo */
+
+    20% { transform: translate(3px, -2px); }
+    /* Em 20%, desloca para a direita e para cima — e assim por diante... */
+
+    30% { transform: translate(-3px, -1px); }
+    40% { transform: translate(2px, 3px); }
+    50% { transform: translate(-1px, 2px); }
+    60% { transform: translate(3px, 1px); }
+    70% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, -1px); }
+    90% { transform: translate(-3px, 2px); }
+    /* Cada uma dessas porcentagens move o elemento em uma direção um pouco diferente, 
+       criando um efeito de "tremor" aleatório/caótico */
+
+    100% { transform: translate(0, 0); } /* Volta para o lugar original no fim */
+    /* Ao final da animação, garante que o elemento volte exatamente à posição original, 
+       sem deixar nenhum deslocamento residual */
+}
+
+/* Classe que ativa a animação por exatamente 1 segundo */
+.tremer {
+    animation: terremoto 1s ease-in-out;
+    /* Aplica a animação "terremoto" definida acima, com duração de 1 segundo, 
+       e com a curva de tempo "ease-in-out" (começa suave, acelera no meio, desacelera no fim).
+       Essa classe é adicionada/removida via JavaScript (função dispararTerremoto()) */
+}
+
+/* Linhas táticas decorativas nos cantos superiores */
+body::before {
+    content: "[ DEPLOYED RADAR SYSTEM ]";
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+body::after {
+    content: "SYS_STATUS: ACTIVE";
+    position: absolute;
+    bottom: 25px;
+    right: 35px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+#painel_tempo {
+    font-family: 'Courier New', Courier, monospace;
+    color: #00f7ff;
+    background-color: rgba(10, 25, 47, 0.9);
+    padding: 10px 20px;
+    border: 1px solid #00f7ff;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* PAINEL DA TELA DE FIM DE JOGO (RESOLVE O PROBLEMA DE CONTRASTE) */
+
+#tela_fim_jogo {
+    background-color: rgba(10, 25, 47, 0.95); /* Fundo escuro militar para dar contraste */
+    border: 2px solid #ff3333; /* Borda vermelha de "ALERTA/PERIGO" combinando com derrota */
+    padding: 25px 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.3); /* Brilho neon vermelho sutil */
+    margin-bottom: 20px;
+    
+    /* Organiza o h1, o p e o botão perfeitamente alinhados em coluna */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Força o título a ficar destacado em vermelho tático */
+#mensagem_fim {
+    color: #ff3333; 
+    font-size: 32px;
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Força o texto secundário ("Suas vidas acabaram") a ficar em branco puro legível */
+#detalhes_fim {
+    color: #ffffff; 
+    font-size: 16px;
+    margin: 0;
+}
+
+/* SEÇÃO: BOTÕES DE CONTROLE DA PARTIDA (JOGAR NOVAMENTE & VOLTAR AO MENU)
+   Estilização tática/neon para os botões de fim de jogo e reset.*/
+
+#btn_reiniciar, #Resetbtn {
+    /* Define a cor de fundo usando o azul aço militar padrão do menu inicial */
+    background-color: #00aaff; 
+
+    /* Define a cor do texto como azul bem escuro para garantir um contraste nítido e legível */
+    color: #0a192f; 
+
+    /* Adiciona uma borda fina em tom ciano vibrante para reforçar a estética de radar/neon */
+    border: 2px solid #00f7ff; 
+
+    /* Define o espaçamento interno do botão: 12px de altura (topo/base) e 24px de largura (laterais) */
+    padding: 12px 24px; 
+
+    /* Define o tamanho da fonte interna do botão */
+    font-size: 18px; 
+
+    /* Força o botão a usar a mesma fonte monoespaçada e tática do restante do jogo */
+    font-family: 'Courier New', Courier, monospace; 
+
+    /* Deixa o texto em negrito para dar mais destaque às opções */
+    font-weight: bold;
+
+    /* Transforma todo o texto do botão em letras maiúsculas (caixa alta) */
+    text-transform: uppercase; 
+
+    /* Arredonda levemente os cantos do botão em 6px */
+    border-radius: 6px;
+
+    /* Transforma o cursor do mouse na "mãozinha" de clique quando passa por cima do botão */
+    cursor: pointer;
+
+    /* Cria um efeito de brilho azul suave (sombra externa) ao redor do botão */
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.4); 
+
+    /* Margem superior de 20px para afastar o botão dos textos ou elementos logo acima dele */
+    margin-top: 20px; 
+
+    /* Suaviza a transição de TODAS as propriedades (cor, brilho, tamanho) em 0.3 segundos ao interagir */
+    transition: all 0.3s ease-in-out; 
+}
+
+/* EFEITO HOVER: Ativado quando o usuário passa o ponteiro do mouse sobre os botões*/
+#btn_reiniciar:hover, #Resetbtn:hover {
+    /* Muda o fundo para um tom ligeiramente mais escuro/fechado de ciano */
+    background-color: #17afd4; 
+
+    /* Intensifica o brilho azul (aumenta o raio de 10px para 20px e a opacidade para 0.8), simulando que o neon "acendeu" */
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.8); 
+
+    /* Faz o botão aumentar levemente de tamanho (5% maior) para dar uma resposta visual de clique */
+    transform: scale(1.05); 
+}
