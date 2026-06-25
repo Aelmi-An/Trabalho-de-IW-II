@@ -20,15 +20,30 @@
         </div>
     </div>
 
-<div id="placar_padrão" style="display: none;">
+    <div id="placar_padrao" style="display: none;">
         <div>Pontuação: <span id="pontos-player-solo">0</span></div>
-</div>
-<div id="placar_com_cpu" style="display: none;">
-    <div>Seus Pontos: <span id="pontos-player">0</span></div>
-    <div>Pontos CPU: <span id="pontos-cpu">0</span></div>
-</div>
+    </div>
+    
+    <div id="placar_com_cpu" style="display: none;">
+        <div>Seus Pontos: <span id="pontos-player">0</span></div>
+        <div>Pontos CPU: <span id="pontos-cpu">0</span></div>
+    </div>
+    
+    <div id="status_solo" style="display: none;">
+        Vidas: <span id="vidas_contador">10</span>
+    </div>
+
+    <div id="tela_fim_jogo" style="display: none;">
+        <h1 id="mensagem_fim"></h1>
+        <p id="detalhes_fim"></p>
+        <button id="btn_reiniciar" onclick="reiniciarJogo()">Jogar Novamente</button>
+    </div>
 
     <div id="tabuleiro_bem_bolado" style="display: none;"></div>
+
+    <div id="controles_partida" style="display: none; margin-top: 20px;">
+        <button onclick="voltarAoMenu()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer;">Voltar ao Menu</button>
+    </div>
 
     <script src="Javascript/NavalidadesCPU.js"></script>
     <script src="Javascript/Placar_mal_bolado.js"></script>
@@ -36,22 +51,35 @@
 
     <script>
         function escolherModo(modo) {
-            // Esconde o menu inicial
             document.getElementById("menu_inicial").style.display = "none";
-            //mostra
-            // Mostra o tabuleiro como GRID (isso força o CSS do tabuleiro a funcionar com as 10 colunas!)
+            
             let tabuleiro = document.getElementById("tabuleiro_bem_bolado");
             tabuleiro.style.display = "grid";
+            
+            // Mostra o botão de voltar ao menu durante a partida
+            document.getElementById("controles_partida").style.display = "block";
+            
+            zerarPlacar();
 
             if (modo === "padrao") {
-                //mostra a pontuação do jogo padrão como flex
-            document.getElementById("placar_padrão").style.display = "flex";
+                document.getElementById("placar_padrao").style.display = "flex";
                 BatalhaNaval();
             } else if (modo === "cpu") {
-            document.getElementById("placar_com_cpu").style.display = "flex";
+                document.getElementById("placar_com_cpu").style.display = "flex";
                 BatalhaNavalCPU();
             }
         }
+
+        function voltarAoMenu() {
+            document.getElementById("menu_inicial").style.display = "flex";
+            document.getElementById("tabuleiro_bem_bolado").style.display = "none";
+            document.getElementById("controles_partida").style.display = "none";
+            document.getElementById("tela_fim_jogo").style.display = "none";
+            document.getElementById("placar_padrao").style.display = "none";
+            document.getElementById("placar_com_cpu").style.display = "none";
+            document.getElementById("status_solo").style.display = "none";
+            zerarPlacar();
+        }
     </script>
-</body>
+    </body>
 </html>

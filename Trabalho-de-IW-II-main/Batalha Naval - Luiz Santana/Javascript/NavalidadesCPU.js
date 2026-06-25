@@ -3,14 +3,10 @@ const BoomCPU = new Audio('Áudios/água.m4a');
 const XablauCPU = new Audio('Áudios/Navio.m4a');
 const KaboomCPU = new Audio('Áudios/Bomba.mp3');
 
-// Crie essa função utilitária no seu arquivo para reutilizar facilmente
+// Função utilitária do efeito visual de terremoto
 function dispararTerremoto() {
     let tab = document.getElementById("tabuleiro_bem_bolado");
-    
-    // Adiciona a classe que faz tremer
     tab.classList.add("tremer");
-    
-    // Remove a classe após 1 segundo (1000ms) para deixar pronto para o próximo acerto
     setTimeout(() => {
         tab.classList.remove("tremer");
     }, 1000);
@@ -21,10 +17,21 @@ if (typeof tirosDisponiveisCPU === 'undefined') {
     var tirosDisponiveisCPU = [];
 }
 
+// Variável para rastrear quantos barcos restam no tabuleiro para validar a vitória
+let barcosRestantesCPU = 0;
+
 // Função principal que monta o modo de jogo contra o Bot
 function BatalhaNavalCPU() {
+    modoAtual = 'cpu'; // Atualiza o estado global para o botão reiniciar saber onde voltar
+    barcosRestantesCPU = 0; // Reseta o contador de barcos ativos
+
     let tab = document.getElementById("tabuleiro_bem_bolado");
     tab.innerHTML = ""; 
+    
+    // Oculta o contador de vidas do modo solo caso ele esteja visível
+    if (document.getElementById("status_solo")) {
+        document.getElementById("status_solo").style.display = "none";
+    }
     
     // Reseta a lista de tiros que a IA pode dar nesta partida
     tirosDisponiveisCPU = [];
@@ -39,7 +46,12 @@ function BatalhaNavalCPU() {
     for (let linha = 0; linha < 10; linha++) {
         let oceano = [];
         for (let coluna = 0; coluna < 10; coluna++) {
-            oceano.push(Math.floor(Math.random() * 5)); 
+            let sorteio = Math.floor(Math.random() * 5);
+            // Incrementa o contador se a casa possuir um segmento de barco (1, 2 ou 3)
+            if (sorteio >= 1 && sorteio <= 3) {
+                barcosRestantesCPU++;
+            }
+            oceano.push(sorteio);
         }
         sequenciaCPU.push(oceano);
     }
@@ -56,7 +68,7 @@ function BatalhaNavalCPU() {
             imageminicial.style.width = "100%";
             celula.appendChild(imageminicial);
 
-            // Evento de clique para o Modo CPU
+            // Evento de clique para o Modo CPU (Vez do Player)
             celula.addEventListener("click", function () {
                 // 1. Bloqueia cliques em TODO o tabuleiro para ninguém bugar o delay
                 tab.style.pointerEvents = "none";
@@ -74,23 +86,26 @@ function BatalhaNavalCPU() {
                         XablauCPU.play(); 
                         adicionarPontos('player', 321); 
                         dispararTerremoto();
+                        barcosRestantesCPU--;
                         break;
                     case 2: 
                         imageminicial.src = "Imagens/Barcov2.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 231); 
                         dispararTerremoto();
+                        barcosRestantesCPU--;
                         break;
                     case 3: 
                         imageminicial.src = "Imagens/Barcov3.png"; 
                         XablauCPU.play(); 
                         adicionarPontos('player', 132); 
                         dispararTerremoto();
+                        barcosRestantesCPU--;
                         break;
                     case 4: 
                         imageminicial.src = "Imagens/Bomba.png"; 
                         KaboomCPU.play(); 
-                        adicionarPontos('player', -123)
+                        adicionarPontos('player', -123);
                         dispararTerremoto();
                         break;
                 }
@@ -99,9 +114,14 @@ function BatalhaNavalCPU() {
                 celula.style.pointerEvents = "none";
                 celula.classList.add("clicada"); 
 
+                // Validação de Fim de Jogo: se o jogador limpou o mapa do bot
+                if (barcosRestantesCPU <= 0) {
+                    finalizarPartida("VITÓRIA!", "Você derrotou a CPU e destruiu toda a frota!");
+                    return;
+                }
+
                 // 3. Cria o delay de 1.5 segundos para a IA responder e depois libera o tabuleiro
                 setTimeout(function() {
-                    // Executa o turno da IA se você tiver criado essa função
                     if (typeof turnoDaIACPU === "function") {
                         turnoDaIACPU(sequenciaCPU);
                     }
@@ -116,8 +136,13 @@ function BatalhaNavalCPU() {
         }
     }
 }
+
 function turnoDaIACPU(sequenciaCPU) {
-    if (tirosDisponiveisCPU.length === 0) return;
+    if (tirosDisponiveisCPU.length === 0) {
+        // Se a IA ficou sem jogadas possíveis e os barcos não zeraram, o jogo acaba ou empata
+        finalizarPartida("FIM DE JOGO", "O mar ficou sem espaço para manobras!");
+        return;
+    }
 
     // 1. Sorteia o tiro da lista
     let indiceAleatorio = Math.floor(Math.random() * tirosDisponiveisCPU.length);
@@ -174,9 +199,39 @@ function turnoDaIACPU(sequenciaCPU) {
             break;
     }
 
-    // 4. Trava a célula na tela
+    // 4. Trava a célula atingida pela IA na tela
     if (celulaIA) {
         celulaIA.style.pointerEvents = "none";
         celulaIA.classList.add("clicada");
+    }
+}
+function finalizarPartida(titulo, texto) {
+    document.getElementById("mensagem_fim").innerText = titulo;
+    document.getElementById("detalhes_fim").innerText = texto;
+    document.getElementById("tela_fim_jogo").style.display = "block"; 
+    document.getElementById("tabuleiro_bem_bolado").style.pointerEvents = "none"; 
+    
+    // Esconde o botão de "Voltar ao Menu" do meio da partida para não acumular botões
+    document.getElementById("controles_partida").style.display = "none"; 
+}
+
+function reiniciarJogo() {
+    document.getElementById("tela_fim_jogo").style.display = "none";
+    document.getElementById("placar_padrao").style.display = "none";
+    document.getElementById("placar_com_cpu").style.display = "none";
+    document.getElementById("status_solo").style.display = "none";
+    document.getElementById("tabuleiro_bem_bolado").style.pointerEvents = "auto";
+    
+    // Mostra o botão de pânico/retorno novamente
+    document.getElementById("controles_partida").style.display = "block"; 
+
+    zerarPlacar(); 
+
+    if (modoAtual === 'solo') {
+        document.getElementById("placar_padrao").style.display = "flex";
+        BatalhaNaval();
+    } else {
+        document.getElementById("placar_com_cpu").style.display = "flex";
+        BatalhaNavalCPU();
     }
 }

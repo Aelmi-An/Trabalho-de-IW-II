@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: lightblue;
@@ -11,17 +10,16 @@ body {
     min-height: 100vh;
     margin: 0;
 }
-#placar_padrão, #placar_com_cpu{
- 
+
+#placar_padrao, #placar_com_cpu {
     display: flex;
     justify-content: space-around; 
-    width: 100%;                 /* Força o placar a ocupar o espaço da tela */
-    max-width: 450px;            /* Mas limita a 450px para não espalhar demais */
+    width: 100%;                 
+    max-width: 450px;            
     margin-bottom: 20px;          
     font-size: 20px;
     font-family: sans-serif;
     font-weight: bold;
-    
 }
 
 #menu_inicial {
@@ -100,7 +98,49 @@ body {
     100% { transform: translate(0, 0); } /* Volta para o lugar original no fim */
 }
 
-/* Classe que ativa a animação por exatamente 1 segundo */
+/* Classe que altera a animação por exatamente 1 segundo */
 .tremer {
     animation: terremoto 1s ease-in-out;
+}
+
+
+/* Container simples para o status de vidas do modo solo */
+#status_solo {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Tela escura simples de fim de jogo que cobre o tabuleiro */
+#tela_fim_jogo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 3px solid #2196F3;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+/* Estilo básico para o botão de jogar novamente */
+#btn_reiniciar {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.2s;
+}
+
+#btn_reiniciar:hover {
+    background-color: #2196F3;
 }
